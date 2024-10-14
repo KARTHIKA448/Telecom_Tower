@@ -1,0 +1,115 @@
+{% extends 'base.html' %}
+
+{% block title %}Generator Dashboard{% endblock %}
+
+{% block content %}
+<h2>Generator Monitoring Dashboard</h2>
+
+<div class="chart-container">
+    <div class="chart-box" id="fuelLitersBox">
+        <canvas id="fuelLitersChart"></canvas>
+    </div>
+</div>
+
+<div class="chart-container">
+    <div class="chart-box">
+        <canvas id="sensorStatusChart"></canvas>
+    </div>
+    <div class="chart-box">
+        <canvas id="cabinDoorStatusChart"></canvas>
+    </div>
+</div>
+
+<div class="chart-container">
+    <div class="chart-box">
+        <canvas id="cleanDuctStatusChart"></canvas>
+    </div>
+    <div class="chart-box">
+        <canvas id="generatorStatusChart"></canvas>
+    </div>
+</div>
+
+<div class="chart-container">
+    <div class="chart-box">
+        <canvas id="fuelCapStatusChart"></canvas>
+    </div>
+</div>
+
+<!-- Add some CSS for styling -->
+<style>
+    #fuelLitersBox {
+        width: 100%;  /* Adjust this percentage to increase width */
+        height: 33vh; /* Optional: Height for the fuel liters chart */
+    }
+
+    .chart-container {
+        display: flex;                /* Use Flexbox for layout */
+        justify-content: space-around; /* Space out the charts */
+        margin-bottom: 50px;         /* Space between rows */
+    }
+
+    .chart-box {
+        width: 48%;                  /* Default width for other chart boxes */
+        height: 33vh;                /* Set a fixed height for charts */
+        background-color: #fff;      /* Optional: Background color */
+        border-radius: 8px;          /* Optional: Rounded corners */
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Optional: Shadow */
+        padding: 10px;               /* Optional: Padding inside the chart box */
+    }
+
+    /* Ensure canvas takes full width and height of the box */
+    canvas {
+        width: 100% !important;       /* Make canvas full width */
+        height: 100% !important;      /* Make canvas full height */
+    }
+</style>
+
+<script>
+    // Replace Django template tags with the large dataset passed from the view
+    const times = {{ time | safe }};
+    const sensorStatus = {{ sensor_status|safe }};
+    const cabinDoorStatus = {{ cabin_door_status|safe }};
+    const cleanDuctStatus = {{ clean_duct_status|safe }};
+    const generatorStatus = {{ generator_status|safe }};
+    const fuelCapStatus = {{ fuel_cap_status|safe }};
+    const fuelLiters = {{ fuel_liters|safe }};
+
+    // Function to create a line chart for each dataset
+    function createLineChart(ctx, labels, data, label) {
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: label,
+                    data: data,
+                    fill: false,
+                    borderColor: 'rgb(75, 192, 192)',
+                    tension: 0.1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,  // Prevent maintaining aspect ratio
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    },
+                    x: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    }
+
+    // Creating charts using large dataset from the CSV
+    createLineChart(document.getElementById('sensorStatusChart').getContext('2d'), times, sensorStatus, 'Sensor Status');
+    createLineChart(document.getElementById('cabinDoorStatusChart').getContext('2d'), times, cabinDoorStatus, 'Cabin Door Status');
+    createLineChart(document.getElementById('cleanDuctStatusChart').getContext('2d'), times, cleanDuctStatus, 'Clean Duct Status');
+    createLineChart(document.getElementById('generatorStatusChart').getContext('2d'), times, generatorStatus, 'Generator Status');
+    createLineChart(document.getElementById('fuelCapStatusChart').getContext('2d'), times, fuelCapStatus, 'Fuel Cap Status');
+    createLineChart(document.getElementById('fuelLitersChart').getContext('2d'), times, fuelLiters, 'Fuel Liters');
+</script>
+
+{% endblock %}

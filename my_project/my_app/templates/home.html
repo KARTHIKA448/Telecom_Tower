@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block title %}Telecom Tower Project{% endblock %}
+
+{% block content %}
+<!-- Main Content -->
+<div class="project-container">
+    <h1 class="project-title">Telecom Tower Project</h1>
+    <p class="project-description">Description of the project goes here. You can elaborate on the features and objectives of the telecom tower project.</p>
+</div>
+
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f9fafb;
+        color: #333;
+    }
+
+    .project-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh; /* Full height to center content */
+        text-align: center; /* Center-align text */
+    }
+
+    .project-title {
+        font-size: 2.5em;
+        color: #007bff; /* Bootstrap primary color */
+        margin: 0; /* Remove default margin */
+        font-weight: bold; /* Emphasize title */
+    }
+
+    .project-description {
+        font-size: 1.2em;
+        color: #555; /* Slightly lighter gray for contrast */
+        margin-top: 10px; /* Add space above the description */
+    }
+
+    /* Hover Effect for Navbar Links */
+    nav a:hover {
+        background-color: #007bff; /* Primary color for hover */
+        color: #ffffff; /* White text on hover */
+    }
+</style>
+{% endblock %}
