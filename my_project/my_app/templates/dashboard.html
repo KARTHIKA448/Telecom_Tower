@@ -1,0 +1,150 @@
+{% extends 'base.html' %}
+
+{% block title %}Tower List{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+<div class="dashboard-container">
+    <h1 class="text-center">Telecom Tower</h1>
+
+    {% if error_message %}
+        <div class="alert alert-danger text-center">
+            {{ error_message }}
+        </div>
+    {% endif %}
+
+    <div>
+        {% for tower in obj %}
+            <div class="tower">
+                <h3>{{ tower.name }}</h3>
+                <p><strong>Location:</strong> {{ tower.location }}</p>
+
+                <!-- Button to view the detailed dashboard for each tower -->
+                <a href="{% url 'viewdashboard' tower.id %}" class="view-button">View Dashboard</a>
+
+                <!-- Update button, visible only to superusers -->
+                {% if user.is_superuser %}
+                    <a href="{% url 'edit' tower.id %}" class="update-button">Update</a>
+                {% endif %}
+            </div>
+        {% empty %}
+            <p class="text-center">No towers available.</p>
+        {% endfor %}
+    </div>
+
+    <!-- Button to add tower location and file (only visible for superusers) -->
+    {% if user.is_superuser %}
+        <div class="text-center mt-4">
+            <a href="{% url 'upload_file' %}">
+                <button class="upload-button">Upload New Tower</button>
+            </a>
+        </div>
+    {% endif %}
+</div>
+
+<style>
+    /* Base Styles */
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f4f4f4;
+        color: #333;
+        margin: 0;
+        padding: 20px;
+    }
+
+    .dashboard-container {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 30px;
+        background: #ffffff;
+        border-radius: 8px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+        color: #2c3e50;
+        font-weight: bold;
+        margin-bottom: 30px;
+    }
+
+    /* Tower Card Styles */
+    .tower {
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        padding: 20px;
+        margin: 15px 0;
+        transition: box-shadow 0.3s, transform 0.3s;
+    }
+
+    .tower:hover {
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        transform: translateY(-3px);
+    }
+
+    .tower h3 {
+        margin: 0 0 10px;
+        color: #2980b9;
+        font-size: 1.5rem;
+    }
+
+    .tower p {
+        margin: 0 0 15px;
+        font-size: 1rem;
+    }
+
+    /* Button Styles */
+    .view-button, .upload-button, .update-button {
+        display: inline-block;
+        padding: 12px 20px;
+        font-size: 16px;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+        transition: background-color 0.3s, transform 0.3s;
+        margin-right: 10px; /* Space between buttons */
+    }
+
+    .view-button {
+        background-color: #3498db;
+    }
+
+    .view-button:hover {
+        background-color: #2980b9;
+        transform: translateY(-2px);
+    }
+
+    .update-button {
+        background-color: #f39c12; /* Orange color for update */
+    }
+
+    .update-button:hover {
+        background-color: #e67e22;
+        transform: translateY(-2px);
+    }
+
+    .upload-button {
+        background-color: #4CAF50;
+    }
+
+    .upload-button:hover {
+        background-color: #45a049;
+        transform: translateY(-2px);
+    }
+
+    /* Mobile Styles */
+    @media (max-width: 600px) {
+        .dashboard-container {
+            padding: 20px;
+        }
+
+        .view-button, .upload-button, .update-button {
+            width: 100%;
+            text-align: center;
+            margin: 5px 0; /* Spacing for buttons */
+        }
+    }
+</style>
+{% endblock %}

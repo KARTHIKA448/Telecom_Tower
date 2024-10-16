@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block title %}Telecom Tower Project{% endblock %}
+
+{% block content %}
+<div class="project-container">
+    <h1 class="project-title"><b>Telecom Tower Project</b></h1>
+    <p class="project-description">Welcome to the Telecom Tower Fuel Consumption Reporting System. This platform provides comprehensive insights into the fuel usage of telecom towers, helping operators track, analyze, and optimize fuel consumption. With detailed reports and visualizations, our system enables efficient fuel management, reducing costs and ensuring the continuous operation of telecom infrastructure. Stay informed with real-time data and make decisions that keep your towers running smoothly and sustainably.</p>
+</div>
+
+<style>
+    .project-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 80vh;
+        text-align: center;
+    }
+
+    .project-title {
+        font-size: 2.5em;
+        color: #007bff;
+        font-weight: bold;
+    }
+
+    .project-description {
+        font-size: 1.2em;
+        color: #555;
+        margin-top: 10px;
+        text-align: left;
+    }
+</style>
+{% endblock %}
