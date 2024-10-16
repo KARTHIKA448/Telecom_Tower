@@ -123,7 +123,7 @@ def upload_file(request):
         form = Towerform(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            messages.success(request, 'Tower created successfully!')  # Set a success message
+            # messages.success(request, 'Tower created successfully!')  # Set a success message
             return redirect('dashboard')  # Redirect to the dashboard after creation
     else:
         form = Towerform()
@@ -155,5 +155,5 @@ def edit_view(request, id):
 def delete_file(request, file_id):
     file = get_object_or_404(Tower, id=file_id)  # Fetch the file by ID
     file.delete()  # Delete the file from the database
-    messages.success(request, 'Tower deleted successfully!')
+    # messages.success(request, 'Tower deleted successfully!')
     return redirect('dashboard')  # Redirect to dashboard after deletion
