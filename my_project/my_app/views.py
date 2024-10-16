@@ -144,7 +144,7 @@ def edit_view(request, id):
             tower.file = file  # Update the file only if a new one is uploaded
 
         tower.save()
-        messages.success(request, 'Tower details updated successfully!')
+        # messages.success(request, 'Tower details updated successfully!')
         return redirect('dashboard')  # Redirect to the dashboard after editing
 
     return render(request, 'edit.html', {'tower': tower})
