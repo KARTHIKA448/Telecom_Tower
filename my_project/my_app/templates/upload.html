@@ -1,37 +1,74 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Upload File</title>
-</head>
-<body style="font-family: Arial, sans-serif; background-color: #f1f3f5; color: #333; margin: 0; padding: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh;">
+{% extends 'base.html' %}
 
-    <div style="max-width: 500px; width: 100%; padding: 40px; background-color: #ffffff; border-radius: 12px; box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);">
-        <h1 style="color: #2c3e50; text-align: center; margin-bottom: 25px; font-size: 28px; font-weight: 600; letter-spacing: 0.5px;">Upload Your File</h1>
+{% block title %}Upload Data{% endblock %}
 
-        <form method="post" enctype="multipart/form-data" style="display: flex; flex-direction: column; align-items: stretch;">
-            {% csrf_token %}
-            <div style="width: 100%; margin-bottom: 20px;">
-                {{ form.as_p }}
-            </div>
-            <input type="submit" value="Upload" style="background-color: #4CAF50; color: white; border: none; padding: 12px 0; font-size: 16px; border-radius: 8px; cursor: pointer; font-weight: 500; transition: background-color 0.3s ease, transform 0.2s;">
-        </form>
+{% block content %}
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
-        <!-- Success Message -->
-        {% if success_message %}
-            <div style="margin-top: 20px; padding: 15px; background-color: #e8f5e9; color: #2e7d32; border: 1px solid #c8e6c9; border-radius: 8px; text-align: center;">
-                {{ success_message }}
-            </div>
-        {% endif %}
-    </div>
+<div class="container mt-5">
+    <h1 class="text-center">Upload Tower Data</h1>
 
-    <!-- Optional inline CSS for button hover effect -->
-    <style>
-        input[type="submit"]:hover {
-            background-color: #388e3c;
-            transform: translateY(-2px); /* slight upward movement on hover */
+    {% if error_message %}
+        <div class="alert alert-danger">
+            {{ error_message }}
+        </div>
+    {% endif %}
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="tower-name">Tower Name:</label>
+            <input type="text" id="tower-name" name="name" class="form-control" required placeholder = "Enter the Tower name">
+        </div>
+
+        <div class="form-group">
+            <label for="tower-location">Location:</label>
+            <input type="text" id="tower-location" name="location" class="form-control" required placeholder = "Enter the Tower location">
+        </div>
+
+        <div class="form-group">
+            <label for="tower-file">Upload File:</label>
+            <input type="file" id="tower-file" name="file" class="form-control" required>
+        </div>
+
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary">Upload</button>
+            <a href="{% url 'dashboard' %}" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
+
+<style>
+    h1 {
+        color: #2c3e50;
+        font-weight: bold;
+        margin-bottom: 30px;
+    }
+
+    .btn-primary {
+        background-color: #3498db;
+        border: none;
+    }
+
+    .btn-primary:hover {
+        background-color: #2980b9;
+    }
+
+    .btn-secondary {
+        margin-left: 10px;
+        background-color: #6c757d;
+        border: none;
+    }
+
+    .btn-secondary:hover {
+        background-color: #5a6268;
+    }
+
+    /* Mobile Styles */
+    @media (max-width: 600px) {
+        .container {
+            padding: 15px;
         }
-    </style>
-</body>
-</html>
+    }
+</style>
+{% endblock %}
